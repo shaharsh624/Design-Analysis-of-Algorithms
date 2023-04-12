@@ -1,5 +1,3 @@
-import java.lang.*;
-
 class Subtraction {
     static Node head;
     boolean borrow;
