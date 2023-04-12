@@ -1,6 +1,6 @@
 public class CityDatabaseArray {
 
-    private static final int INITIAL_CAPACITY = 10;
+    private static final int N = 10;
 
     private String[] cityNames;
     private int[] xCoords;
@@ -8,9 +8,9 @@ public class CityDatabaseArray {
     private int size;
 
     public CityDatabaseArray() {
-        cityNames = new String[INITIAL_CAPACITY];
-        xCoords = new int[INITIAL_CAPACITY];
-        yCoords = new int[INITIAL_CAPACITY];
+        cityNames = new String[N];
+        xCoords = new int[N];
+        yCoords = new int[N];
         size = 0;
     }
 
@@ -38,10 +38,10 @@ public class CityDatabaseArray {
         }
     }
 
-    // Searches for a record with the given name or coordinates and returns its index, or -1 if not found
-    public int search(String nameOrCoord) {
+    // Search - Returns its index, or -1 if not found
+    public int search(String coordinate) {
         for (int i = 0; i < size; i++) {
-            if (cityNames[i].equals(nameOrCoord) || (xCoords[i] + "," + yCoords[i]).equals(nameOrCoord)) {
+            if (cityNames[i].equals(coordinate) || (xCoords[i] + "," + yCoords[i]).equals(coordinate)) {
                 return i;
             }
         }
@@ -80,12 +80,12 @@ public class CityDatabaseArray {
 
     public static void main(String[] args) {
         CityDatabaseArray db = new CityDatabaseArray();
-        db.insert("Berlin",50,60);
-        db.insert("Tokyo",40 ,70);
-        db.insert("Berlin",50,90);
+        db.insert("Chennai",50,60);
+        db.insert("Kolkata",40 ,70);
+        db.insert("Mumbai",50,90);
         db.insert("Delhi",20 ,70);
-        db.search("Berlin");
-        db.printNearby(50,40,20);
+        System.out.println("Index: " + db.search("Mumbai")); // Search
+        db.printNearby(30,70,20); // Find Nearby
     }
 
 }

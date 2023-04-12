@@ -1,128 +1,129 @@
 import java.util.*;
 
-public class Main {
+/* class Graph {
+    static class Edge{
+        int src;
+        int dest;
 
-    // defines edge structure
-    static class Edge {
-        int src, dest, weight;
-
-        public Edge(int src, int dest, int weight) {
+        Edge (int src, int dest){
             this.src = src;
             this.dest = dest;
-            this.weight = weight;
         }
     }
-
-    // defines subset element structure
-    static class Subset {
-        int parent, rank;
-
-        public Subset(int parent, int rank) {
-            this.parent = parent;
-            this.rank = rank;
-        }
-    }
-
-    // Starting point of program execution
     public static void main(String[] args) {
-        /* ****************************************
-         * Let us create following weighted graph
-         10
-         0--------1
-         | -	 |
-         6| 5- |15
-         |	 - |
-         2--------3
-         4
-         **************************************** */
-        int V = 4;
-        List<Edge> graphEdges = new ArrayList<Edge>(List.of(
-                new Edge(0, 1, 10),
-                new Edge(0, 2, 6),
-                new Edge(0, 3, 5),
-                new Edge(1, 3, 15),
-                new Edge(2, 3, 4)
-        ));
+        int V = 6;
+        ArrayList<Edge>[] graph = new ArrayList[V];
 
-        // Step 1: sort the edges in non-decreasing order
-        // (increasing with repetition allowed)
-        graphEdges.sort(new Comparator<Edge>() {
-            @Override
-            public int compare(Edge o1, Edge o2) {
-                return o1.weight - o2.weight;
-            }
-        });
+        int[] weights = {1};
 
-        kruskals(V, graphEdges);
-    }
-
-
-    private static void kruskals(int V, List<Edge> edges) {
-        int j = 0;
-        int noOfEdges = 0;
-        // Allocate memory for creating V subsets
-        Subset[] subsets = new Subset[V];
-
-        // Allocate memory for results
-        Edge[] results = new Edge[V];
-
-        // Create V subsets with single elements
-        for (int i = 0; i < V; i++) {
-            subsets[i] = new Subset(i, 0);
+        for (int i=0 ; i<graph.length ; i++){
+            graph[i] = new ArrayList<>();
         }
 
-        // Number of edges to be taken is equal to V-1
-        while (noOfEdges < V - 1) {
-            // Step 2: Pick the smallest edge. And increment
-            // the index for next iteration
-            Edge nextEdge = edges.get(j);
-            int x = findRoot(subsets, nextEdge.src);
-            int y = findRoot(subsets, nextEdge.dest);
+        graph[0].add(new Edge(0,1));
 
-            // If including this edge doesn't cause cycle,
-            // include it in result and increment the index
-            // of result for next edge
-            if (x != y) {
-                results[noOfEdges] = nextEdge;
-                union(subsets, x, y);
-                noOfEdges++;
-            }
+        graph[1].add(new Edge(1,0));
+        graph[1].add(new Edge(1,2));
+        graph[1].add(new Edge(1,4));
 
-            j++;
-        }
+        graph[2].add(new Edge(2,1));
+        graph[2].add(new Edge(2,3));
 
-        // print the contents of result[] to display the built MST
-        System.out.println("Following are the edges of the constructed MST:");
-        System.out.println("-----------------------------------------------");
-        int minCost = 0;
-        for (int i = 0; i < noOfEdges; i++) {
-            System.out.println(results[i].src + " - " + results[i].dest + ": " + results[i].weight);
-            minCost += results[i].weight;
-        }
-        System.out.println("-----------------------------------------------");
-        System.out.println("Total cost of MST: "+minCost);
+        graph[3].add(new Edge(3,4));
 
-    }
+        graph[4].add(new Edge(4,1));
+        graph[4].add(new Edge(4,3));
+        graph[4].add(new Edge(4,5));
 
-    private static void union(Subset[] subsets, int x, int y) {
-        int rootX = findRoot(subsets, x);
-        int rootY = findRoot(subsets, y);
-
-        if (subsets[rootY].rank < subsets[rootX].rank) {
-            subsets[rootY].parent = rootX;
-        } else if (subsets[rootX].rank < subsets[rootY].rank) {
-            subsets[rootX].parent = rootY;
-        } else {
-            subsets[rootY].parent = rootX;
-            subsets[rootX].rank++;
-        }
-    }
-
-    private static int findRoot(Subset[] subsets, int i) {
-        if (subsets[i].parent == i)
-            return subsets[i].parent;
-
-        subsets[i].parent = findRoot(subsets, subsets[i].parent);
-        return subsets[i].parent;
+        graph[5].add(new Edge(5,4));
     }
 }
+*/ 
+
+public class Main {
+    static void makeSet(int parent[], int rank[], int n) {
+        for (int i=0; i<n; i++) {
+            parent[i] = i;
+            rank[i] = 0;
+        }
+    }
+
+    static int findParent(int parent[], int node) {
+        if (parent[node] == node) {
+            return node;
+        }
+        return parent[node] = findParent(parent, parent[node]);
+    }
+
+    static void unionSet(int u, int v, int parent[], int[] rank) {
+        u = findParent(parent, u);
+        v = findParent(parent, v);
+
+        if (rank[u] < rank[v]) {
+            parent[u] = v;
+        }
+        else if (rank[u] < rank[v]) {
+            parent[u] = v;
+        }
+        else {
+            parent[v] = u;
+            rank[u]++;
+        }
+    }
+
+    static int minSpanTree(int [][] edges, int n){
+        Arrays.sort(edges);
+        int[] parent = new int[n];
+        int[] rank = new int[n];
+        makeSet(parent, rank, n);
+
+        int minWeight = 0;
+
+        for (int i=0; i<edges.length; i++) {
+            int u = findParent(parent, edges[i][0]);
+            int v = findParent(parent, edges[i][1]);
+            int weight = edges[i][2];
+
+            if (u != v) {
+                minWeight += weight;
+                unionSet(u, v, parent, rank);
+            }
+        }
+        return minWeight;
+    }
+    public static void main(String[] args) {
+        int [][] edges = {
+            {7,6,1},
+            {8,2,2},
+            {6,5,2},
+            {0,1,4},
+            {2,5,4},
+            {8,6,6},
+            {2,3,7},
+            {7,8,7},
+            {0,7,8},
+            {1,2,8},
+            {3,4,9},
+            {5,4,10},
+            {1,7,11},
+            {3,5,14}
+    };
+        int n=9;
+        System.out.println(minSpanTree(edges, n));
+
+    }
+
+}
+
+class Edge {
+    int src, dest, weight;
+
+    public Edge(int src, int dest, int weight) {
+        this.src = src;
+        this.dest = dest;
+        this.weight = weight;
+    }
+}
+
+
+

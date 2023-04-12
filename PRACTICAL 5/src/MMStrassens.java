@@ -19,7 +19,6 @@ class MMStrassens {
         System.out.println(display + " =>\n");
         for (int i = start_row; i <= end_row; i++) {
             for (int j = start_column; j <= end_column; j++) {
-                //cout << setw(10);
                 System.out.print(matrix[i][j]+" ");
             }
             System.out.println();
@@ -36,7 +35,7 @@ class MMStrassens {
         }
     }
 
-    public static void initWithZeros(int[][] a, int r, int c){
+    public static void initWithZeros(int[][] a, int r, int c) {
         for(int i=0;i<r;i++){
             for(int j=0;j<c;j++){
                 a[i][j]=0;
@@ -44,12 +43,11 @@ class MMStrassens {
         }
     }
 
-    public static int[][] multiply_matrix(int[][] matrix_A,int[][] matrix_B)
-    {
+    public static int[][] multiply_matrix(int[][] matrix_A,int[][] matrix_B) {
         int col_1 = matrix_A[0].length;
-        int row_1 = matrix_A.length;
+        int row_1 = matrix_A[1].length;
         int col_2 = matrix_B[0].length;
-        int row_2 = matrix_B.length;
+        int row_2 = matrix_B[1].length;
 
         if (col_1 != row_2) {
             System.out.println("\nError: The number of columns in Matrix A  must be equal to the number of rows in Matrix B\n");
@@ -130,18 +128,22 @@ class MMStrassens {
     }
 
     public static void main (String[] args) {
-        int[][] matrix_A = { { 1, 1, 1, 1 },
+        int[][] matrix_A = {
+                { 1, 1, 1, 1 },
                 { 2, 2, 2, 2 },
                 { 3, 3, 3, 3 },
-                { 2, 2, 2, 2 } };
+                { 2, 2, 2, 2 }
+        };
 
         System.out.println("Array A =>");
         printMat(matrix_A,4,4);
 
-        int[][] matrix_B = { { 1, 1, 1, 1 },
+        int[][] matrix_B = {
+                { 1, 1, 1, 1 },
                 { 2, 2, 2, 2 },
                 { 3, 3, 3, 3 },
-                { 2, 2, 2, 2 } };
+                { 2, 2, 2, 2 }
+        };
 
         System.out.println("Array B =>");
         printMat(matrix_B,4,4);

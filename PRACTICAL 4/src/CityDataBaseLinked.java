@@ -35,18 +35,18 @@ class CityDatabase {
     }
 
     // Deletes a record with the given name or coordinates
-    public void delete(String nameOrCoord) {
+    public void delete(String coordinate) {
         if (head == null) {
             return;
         }
-        if (head.name.equals(nameOrCoord) || (head.x + "," + head.y).equals(nameOrCoord)) {
+        if (head.name.equals(coordinate) || (head.x + "," + head.y).equals(coordinate)) {
             head = head.next;
             size--;
             return;
         }
         CityDataBaseLinked curr = head;
         while (curr.next != null) {
-            if (curr.next.name.equals(nameOrCoord) || (curr.next.x + "," + curr.next.y).equals(nameOrCoord)) {
+            if (curr.next.name.equals(coordinate) || (curr.next.x + "," + curr.next.y).equals(coordinate)) {
                 curr.next = curr.next.next;
                 size--;
                 return;
@@ -56,10 +56,10 @@ class CityDatabase {
     }
 
     // Searches for a record with the given name or coordinates and returns its index, or -1 if not found
-    public CityDataBaseLinked search(String nameOrCoord) {
+    public CityDataBaseLinked search(String coordinate) {
         CityDataBaseLinked curr = head;
         while (curr != null) {
-            if (curr.name.equals(nameOrCoord) || (curr.x + "," + curr.y).equals(nameOrCoord)) {
+            if (curr.name.equals(coordinate) || (curr.x + "," + curr.y).equals(coordinate)) {
                 return curr;
             }
             curr = curr.next;
