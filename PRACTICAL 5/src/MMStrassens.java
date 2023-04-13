@@ -1,156 +1,132 @@
-import java.util.*;
+import java.util.Scanner;
 
-class MMStrassens {
+public class MMStrassens {
+    public int[][] multiply(int[][] A, int[][] B) {
+        int n = A.length;
+        int[][] R = new int[n][n];
 
-    static int ROW_1 = 3,COL_1 = 2, ROW_2 = 2, COL_2 = 4;
+        if (n == 1){
+            R[0][0] = A[0][0] * B[0][0];
+        }
+        else {
+            int[][] A11 = new int[n / 2][n / 2];
+            int[][] A12 = new int[n / 2][n / 2];
+            int[][] A21 = new int[n / 2][n / 2];
+            int[][] A22 = new int[n / 2][n / 2];
+            int[][] B11 = new int[n / 2][n / 2];
+            int[][] B12 = new int[n / 2][n / 2];
+            int[][] B21 = new int[n / 2][n / 2];
+            int[][] B22 = new int[n / 2][n / 2];
 
-    public static void printMat(int[][] a, int r, int c){
-        for(int i=0;i<r;i++){
-            for(int j=0;j<c;j++){
-                System.out.print(a[i][j]+" ");
+            // Dividing matrix A into 4 halves
+            split(A, A11, 0, 0);
+            split(A, A12, 0, n / 2);
+            split(A, A21, n / 2, 0);
+            split(A, A22, n / 2, n / 2);
+
+            // Dividing matrix B into 4 halves
+            split(B, B11, 0, 0);
+            split(B, B12, 0, n / 2);
+            split(B, B21, n / 2, 0);
+            split(B, B22, n / 2, n / 2);
+
+            int[][] M1 = multiply(add(A11, A22), add(B11, B22));
+            int[][] M2 = multiply(add(A21, A22), B11);
+            int[][] M3 = multiply(A11, sub(B12, B22));
+            int[][] M4 = multiply(A22, sub(B21, B11));
+            int[][] M5 = multiply(add(A11, A12), B22);
+            int[][] M6 = multiply(sub(A21, A11), add(B11, B12));
+            int[][] M7 = multiply(sub(A12, A22), add(B21, B22));
+
+            int[][] C11 = add(sub(add(M1, M4), M5), M7);
+            int[][] C12 = add(M3, M5);
+            int[][] C21 = add(M2, M4);
+            int[][] C22 = add(sub(add(M1, M3), M2), M6);
+
+            // Join 4 halves into one result matrix
+            join(C11, R, 0, 0);
+            join(C12, R, 0, n / 2);
+            join(C21, R, n / 2, 0);
+            join(C22, R, n / 2, n / 2);
+        }
+        return R;
+    }
+
+    // Funtion to sub two matrices
+    public int[][] sub(int[][] A, int[][] B) {
+        int n = A.length;
+        int[][] C = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                C[i][j] = A[i][j] - B[i][j];
+            }
+        }
+        return C;
+    }
+
+    // Funtion to add two matrices
+    public int[][] add(int[][] A, int[][] B) {
+        int n = A.length;
+        int[][] C = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                C[i][j] = A[i][j] + B[i][j];
+            }
+        }
+        return C;
+    }
+
+    // Funtion to split parent matrix into child matrices
+    public void split(int[][] P, int[][] C, int iB, int jB) {
+        for (int i1 = 0, i2 = iB; i1 < C.length; i1++, i2++) {
+            for (int j1 = 0, j2 = jB; j1 < C.length; j1++, j2++) {
+                C[i1][j1] = P[i2][j2];
+            }
+        }
+    }
+
+    // Funtion to join child matrices intp parent matrix
+    public void join(int[][] C, int[][] P, int iB, int jB) {
+        for (int i1 = 0, i2 = iB; i1 < C.length; i1++, i2++) {
+            for (int j1 = 0, j2 = jB; j1 < C.length; j1++, j2++) {
+                P[i2][j2] = C[i1][j1];
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Strassen Multiplication Algorithm Test\n");
+        MMStrassens s = new MMStrassens();
+
+        System.out.print("Enter order n :");
+        int N = scan.nextInt();
+
+        System.out.println("Enter N order matrix 1\n");
+        int[][] A = new int[N][N];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                A[i][j] = scan.nextInt();
+            }
+        }
+
+        System.out.println("Enter N order matrix 2\n");
+        int[][] B = new int[N][N];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                B[i][j] = scan.nextInt();
+            }
+        }
+
+        int[][] C = s.multiply(A, B);
+
+        System.out.println("\nProduct of matrices A and  B : ");
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                System.out.print(C[i][j] + " ");
             }
             System.out.println();
         }
-        System.out.println();
-    }
-
-    public static void print(String display, int[][] matrix,int start_row, int start_column, int end_row,int end_column)
-    {
-        System.out.println(display + " =>\n");
-        for (int i = start_row; i <= end_row; i++) {
-            for (int j = start_column; j <= end_column; j++) {
-                System.out.print(matrix[i][j]+" ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
-
-    public static void add_matrix(int[][] matrix_A,int[][] matrix_B,int[][] matrix_C, int split_index)
-    {
-        for (int i = 0; i < split_index; i++){
-            for (int j = 0; j < split_index; j++){
-                matrix_C[i][j] = matrix_A[i][j] + matrix_B[i][j];
-            }
-        }
-    }
-
-    public static void initWithZeros(int[][] a, int r, int c) {
-        for(int i=0;i<r;i++){
-            for(int j=0;j<c;j++){
-                a[i][j]=0;
-            }
-        }
-    }
-
-    public static int[][] multiply_matrix(int[][] matrix_A,int[][] matrix_B) {
-        int col_1 = matrix_A[0].length;
-        int row_1 = matrix_A[1].length;
-        int col_2 = matrix_B[0].length;
-        int row_2 = matrix_B[1].length;
-
-        if (col_1 != row_2) {
-            System.out.println("\nError: The number of columns in Matrix A  must be equal to the number of rows in Matrix B\n");
-            int[][] temp = new int[1][1];
-            temp[0][0]=0;
-            return temp;
-        }
-
-        int[] result_matrix_row = new int[col_2];
-        Arrays.fill(result_matrix_row,0);
-        int[][] result_matrix = new int[row_1][col_2];
-        initWithZeros(result_matrix,row_1,col_2);
-
-        if (col_1 == 1){
-            result_matrix[0][0] = matrix_A[0][0] * matrix_B[0][0];
-        } else {
-            int split_index = col_1 / 2;
-
-            int[] row_vector = new int[split_index];
-            Arrays.fill(row_vector,0);
-
-            int[][] result_matrix_00 = new int[split_index][split_index];
-            int[][] result_matrix_01 = new int[split_index][split_index];
-            int[][] result_matrix_10 = new int[split_index][split_index];
-            int[][] result_matrix_11 = new int[split_index][split_index];
-            initWithZeros(result_matrix_00,split_index,split_index);
-            initWithZeros(result_matrix_01,split_index,split_index);
-            initWithZeros(result_matrix_10,split_index,split_index);
-            initWithZeros(result_matrix_11,split_index,split_index);
-
-            int[][] a00 = new int[split_index][split_index];
-            int[][] a01 = new int[split_index][split_index];
-            int[][] a10 = new int[split_index][split_index];
-            int[][] a11 = new int[split_index][split_index];
-            int[][] b00 = new int[split_index][split_index];
-            int[][] b01 = new int[split_index][split_index];
-            int[][] b10 = new int[split_index][split_index];
-            int[][] b11 = new int[split_index][split_index];
-
-            initWithZeros(a00,split_index,split_index);
-            initWithZeros(a01,split_index,split_index);
-            initWithZeros(a10,split_index,split_index);
-            initWithZeros(a11,split_index,split_index);
-            initWithZeros(b00,split_index,split_index);
-            initWithZeros(b01,split_index,split_index);
-            initWithZeros(b10,split_index,split_index);
-            initWithZeros(b11,split_index,split_index);
-
-
-            for (int i = 0; i < split_index; i++){
-                for (int j = 0; j < split_index; j++) {
-                    a00[i][j] = matrix_A[i][j];
-                    a01[i][j] = matrix_A[i][j + split_index];
-                    a10[i][j] = matrix_A[split_index + i][j];
-                    a11[i][j] = matrix_A[i + split_index][j + split_index];
-                    b00[i][j] = matrix_B[i][j];
-                    b01[i][j] = matrix_B[i][j + split_index];
-                    b10[i][j] = matrix_B[split_index + i][j];
-                    b11[i][j] = matrix_B[i + split_index][j + split_index];
-                }
-            }
-
-            add_matrix(multiply_matrix(a00, b00),multiply_matrix(a01, b10),result_matrix_00, split_index);
-            add_matrix(multiply_matrix(a00, b01),multiply_matrix(a01, b11),result_matrix_01, split_index);
-            add_matrix(multiply_matrix(a10, b00),multiply_matrix(a11, b10),result_matrix_10, split_index);
-            add_matrix(multiply_matrix(a10, b01),multiply_matrix(a11, b11),result_matrix_11, split_index);
-
-            for (int i = 0; i < split_index; i++){
-                for (int j = 0; j < split_index; j++) {
-                    result_matrix[i][j] = result_matrix_00[i][j];
-                    result_matrix[i][j + split_index] = result_matrix_01[i][j];
-                    result_matrix[split_index + i][j] = result_matrix_10[i][j];
-                    result_matrix[i + split_index] [j + split_index] = result_matrix_11[i][j];
-                }
-            }
-        }
-        return result_matrix;
-    }
-
-    public static void main (String[] args) {
-        int[][] matrix_A = {
-                { 1, 1, 1, 1 },
-                { 2, 2, 2, 2 },
-                { 3, 3, 3, 3 },
-                { 2, 2, 2, 2 }
-        };
-
-        System.out.println("Array A =>");
-        printMat(matrix_A,4,4);
-
-        int[][] matrix_B = {
-                { 1, 1, 1, 1 },
-                { 2, 2, 2, 2 },
-                { 3, 3, 3, 3 },
-                { 2, 2, 2, 2 }
-        };
-
-        System.out.println("Array B =>");
-        printMat(matrix_B,4,4);
-
-        int[][] result_matrix =  multiply_matrix(matrix_A, matrix_B);
-
-        System.out.println("Result Array =>");
-        printMat(result_matrix,4,4);
+        scan.close();
     }
 }

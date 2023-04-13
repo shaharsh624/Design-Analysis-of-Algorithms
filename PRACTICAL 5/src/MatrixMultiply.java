@@ -40,7 +40,7 @@ public class MatrixMultiply {
             for (i = 0; i < row1; i++) {
                 for (j = 0; j < col2; j++) {
                     for (k = 0; k < col1; k++){
-                        c[i][j] += a[i][k] * b[k][j];
+                        c[i][j] += (a[i][k] * b[k][j]);
                     }
                 }
             }
