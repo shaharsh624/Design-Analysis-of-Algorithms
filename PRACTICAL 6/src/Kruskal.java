@@ -23,7 +23,6 @@ public class Kruskal {
         sc.close();
     }
 }
-
 class Graph {
     static class Edge implements Comparable<Edge> {
         int src, dest, weight;
