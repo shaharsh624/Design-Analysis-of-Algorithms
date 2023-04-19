@@ -38,5 +38,6 @@ public class SelectionSort {
         for(int k = 0; k < length; k ++) {
             System.out.print(array[k] + " ");
         }
+        sc.close();
     }
 }

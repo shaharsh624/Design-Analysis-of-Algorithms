@@ -82,5 +82,6 @@ class MergeSort {
 
 		System.out.println("\nSorted array");
 		printArray(array);
+		sc.close();
 	}
 }

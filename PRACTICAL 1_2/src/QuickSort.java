@@ -58,5 +58,6 @@ class QuickSort {
 
 		System.out.println("\nSorted array: ");
 		printArray(array, n);
+        sc.close();
 	}
 }
