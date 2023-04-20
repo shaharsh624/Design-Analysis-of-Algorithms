@@ -25,14 +25,8 @@ public class FloydWarshall {
         System.out.println("Resultant Matrix using Floyd Warshall is: ");
         int V = matrix.length;
 
-        System.out.print("    ");
         for(int i = 0; i < V; i ++) {
-            System.out.print(i+1 + " ");
-        }
-        System.out.println();
-
-        for(int i = 0; i < V; i ++) {
-            System.out.print(i+1 + " [ ");
+            System.out.print("[ ");
             for(int j = 0; j < V; j ++) {
                 if(matrix[i][j] == INF) {
                     System.out.print("∞ ");
@@ -57,7 +51,7 @@ public class FloydWarshall {
 
          0  8 -1  1
         -1  0  1 -1
-         4 -1  0 -1
+         4 -1  0 -13
         -1  2  9  0
 
         */

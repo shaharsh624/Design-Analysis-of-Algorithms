@@ -86,7 +86,7 @@ class Graph {
 
 public class KruskalsAlgo {
     public static void main(String[] args) {
-        int V = 4, E = 5;
+        int V = 5, E = 8;
         Graph g = new Graph(V, E);
 
         g.addEdge(0, 1, 10);

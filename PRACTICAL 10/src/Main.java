@@ -1,8 +1,7 @@
 public class Main {
     public static void main(String[] args) {
         int[] A = {1, 3, 5, 7, 8, 6, 4, 2};
-            int n = A.length;
-            int left = 0, right = n - 1;
+            int left = 0, right = A.length - 1;
 
             // Continue until left and right indices become same
             while (left < right) {
