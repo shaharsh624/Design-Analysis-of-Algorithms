@@ -5,6 +5,8 @@ public class NQueenProblem {
 
     static boolean solveNQueen(int board[][], int col) {
         if (col >= N) {
+            printSolution(board);
+            System.out.println();
             return true;
         }
         for (int i = 0; i < N; i++) {

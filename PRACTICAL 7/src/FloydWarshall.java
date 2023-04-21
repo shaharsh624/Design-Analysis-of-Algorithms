@@ -42,20 +42,6 @@ public class FloydWarshall {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        /*
-
-         0  5 -1 10
-        -1  0  3 -1
-        -1 -1  0  1
-        -1 -1 -1  0
-
-         0  8 -1  1
-        -1  0  1 -1
-         4 -1  0 -13
-        -1  2  9  0
-
-        */
-
         System.out.println("Input the Graph Matrix");
         System.out.print("Enter number of vertices: ");
         int V = sc.nextInt();
@@ -65,7 +51,7 @@ public class FloydWarshall {
             System.out.printf("Enter vertex from %d : ", (i+1));
             for (int j=0 ; j<V ; j++) {
                 graph[i][j] =  sc.nextInt();
-                if (graph[i][j] == -1) {
+                if (graph[i][j] == 0) {
                     graph[i][j] = INF;
                 }
             }

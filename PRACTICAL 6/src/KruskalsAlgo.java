@@ -77,23 +77,28 @@ class Graph {
             }
         }
 
+
+        int cost = 0;
         System.out.println("Edges in MST:");
         for (Edge edge : result) {
             System.out.println(edge.src + " - " + edge.dest + " : " + edge.weight);
+            cost += edge.weight;
         }
+        
+        System.out.println(cost);
     }
 }
 
 public class KruskalsAlgo {
     public static void main(String[] args) {
-        int V = 5, E = 8;
+        int V = 4, E = 5;
         Graph g = new Graph(V, E);
 
-        g.addEdge(0, 1, 10);
-        g.addEdge(0, 2, 6);
-        g.addEdge(0, 3, 5);
-        g.addEdge(1, 3, 15);
-        g.addEdge(2, 3, 4);
+        g.addEdge(0, 1, 1);
+        g.addEdge(0, 2, 1);
+        g.addEdge(0, 3, 2);
+        g.addEdge(1, 2, 4);
+        g.addEdge(2, 3, 3);
 
         g.kruskal();
     }

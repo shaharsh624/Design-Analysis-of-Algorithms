@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        int[] A = {1, 3, 5, 7, 8, 6, 4, 2};
+        int[] A = {8,7,6,5,4};
             int left = 0, right = A.length - 1;
 
             // Continue until left and right indices become same
