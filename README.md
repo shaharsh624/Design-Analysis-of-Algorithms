@@ -18,3 +18,6 @@ All the programs that were developed in the DAA Lab
 5. **Divide & Conquer** - Matrix Multiplication
 6. **Greedy** - Kruskal's Algo using Union Find
 7. **Dynamic Programming** - Floyd Warshall
+8. **Back Tracking** - N Queens Problem
+9. **Branch & Bound** - Travelling Salesman Problem
+10. **General Problem** - Binary Search Application
