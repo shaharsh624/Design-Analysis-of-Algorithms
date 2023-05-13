@@ -1,4 +1,4 @@
-public class Main {
+public class PeakElement {
     public static void main(String[] args) {
         int[] A = {8,7,6,5,4};
             int left = 0, right = A.length - 1;

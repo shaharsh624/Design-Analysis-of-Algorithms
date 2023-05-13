@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class NQueenProblem {
+public class BacktrackingNQueen {
     static int N;
 
     static boolean solveNQueen(int board[][], int col) {

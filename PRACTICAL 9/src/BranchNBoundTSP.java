@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class BranchNBound {
+public class BranchNBoundTSP {
 
     // Stores number of cities
     static int N = 4;

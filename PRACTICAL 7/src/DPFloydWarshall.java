@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class FloydWarshall {
+public class DPFloydWarshall {
     static int INF = 9999;
 
     static void floydWarshall(int[][] graph) {
